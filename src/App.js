@@ -7,6 +7,8 @@ import theme from './theme';
 import { Paper, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 import * as commonActions from './actions/CommonActions';
+import PhotoView from './components/PhotoView';
+import Photo from './components/Photo';
 
 class App extends Component {
     render() {
@@ -18,9 +20,7 @@ class App extends Component {
                         <Navbar toggleDrawer={this.props.toggleDrawer}/>
                         <NavMenu navOpen={this.props.navOpen} toggleDrawer={this.props.toggleDrawer} />
                     </header>
-                    <Paper style={{ marginTop: 100, marginLeft: 50, marginRight: 50, top: '50%' }}>
-                        <Typography variant="h1" style={{ color: "black" }}>Placeholder</Typography>
-                    </Paper>
+                    <PhotoView photoList={[0, 1, 2, 3, 4, 5, 6, 7, 8].map(num => {return <Photo />})} />
                 </div>
             </MuiThemeProvider>
         );
