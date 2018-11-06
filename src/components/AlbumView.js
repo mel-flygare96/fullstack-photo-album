@@ -13,7 +13,7 @@ const styles = theme => ({
         //minHeight: 'calc(100vh - 72px)'
     },
     grid: {
-        width: '100%',
+        width: '80%',
         //maxWidth: 1200,
         margin: 0,
         //minHeight: 300

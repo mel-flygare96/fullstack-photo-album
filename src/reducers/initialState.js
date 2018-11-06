@@ -1,7 +1,8 @@
 const initialState = {
-    app: {
+    common: {
         navOpen: false
-    }
+    },
+
 }
 
 export default initialState;
