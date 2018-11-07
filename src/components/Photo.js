@@ -14,7 +14,8 @@ const styles = theme => ({
 
 const Photo = ({
     classes,
-    image
+    image,
+    viewing = false
 }) => {
     return (
         <Button className={classes.button}>
