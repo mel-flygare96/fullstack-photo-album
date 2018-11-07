@@ -1,5 +1,7 @@
 import React from 'react';
 import { Grid, withStyles, GridList, GridListTile } from '@material-ui/core';
+import Photo from './Photo';
+import ImageUpload from './ImageUpload';
 
 const styles = theme => ({
     root: {
@@ -13,7 +15,7 @@ const styles = theme => ({
         //minHeight: 'calc(100vh - 72px)'
     },
     grid: {
-        width: '100%',
+        width: '80%',
         //maxWidth: 1200,
         margin: 0,
         //minHeight: 300
@@ -35,13 +37,17 @@ const PhotoView = ({
             <GridList cellHeight={300} cols={4} className={classes.grid}>
                 {photoList.map(photo => {
                         return (
-                            <GridListTile key={photo.num} cols={1} className={classes.gridItem}>
-                                {photo.photo}
+                            <GridListTile key={photo.id} cols={1} className={classes.gridItem}>
+                                <Photo image={photo.photo} />
                             </GridListTile>
                         );
                     })
                 }
+                {/* <GridListTile cols={1} className={classes.gridItem}>
+                    <ImageUpload />
+                </GridListTile> */}
             </GridList>
+            <ImageUpload />
         </div>
     );
 }

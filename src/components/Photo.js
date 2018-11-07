@@ -2,9 +2,8 @@ import React from 'react';
 import { Grid, withStyles, Paper, Typography, Button } from '@material-ui/core';
 
 const styles = theme => ({
-    frame: {
-        // width: 300,
-        // height: 300,
+    button: {
+        padding: 0
     },
     paper: {
         width: '100%',
@@ -18,7 +17,7 @@ const Photo = ({
     image
 }) => {
     return (
-        <Button>
+        <Button className={classes.button}>
             <img src={image} alt={image} style={{width: 300, height: 300}}/>
         </Button>
     );

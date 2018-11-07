@@ -15,6 +15,9 @@ const styles = theme => ({
         marginLeft: -12,
         marginRight: 20
     },
+    toolbar: {
+        textAlign: 'left'
+    },
     navbar: theme.mixins.toolbar,
 });
 
@@ -25,7 +28,7 @@ const Navbar = ({
     return (
         <div className={classes.root}>
             <AppBar position="fixed" color="primary">
-                <Toolbar>
+                <Toolbar className={classes.toolbar}>
                     <IconButton 
                         className={classes.menuButton} 
                         color="inherit" 
@@ -34,7 +37,7 @@ const Navbar = ({
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" color="inherit" className={classes.grow}>
-                        This Here App
+                        Look, Photos
                     </Typography>
                 </Toolbar>
             </AppBar>

@@ -1,13 +1,44 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Photo from './Photo';
 import PhotoView from './PhotoView';
+import { Typography } from '@material-ui/core';
+import * as photoActions from '../actions/PhotoActions';
 
 class AllPhotos extends React.Component {
+    componentDidMount(){
+        let images = localStorage.getItem("images");
+        if(images){
+            images.split(" ").forEach(file => {
+                this.props.uploadPhoto(file);
+            })
+        }
+    }
     render(){
-        return (
-            <PhotoView photoList={[0, 1, 2, 3, 4, 5, 6, 7, 8].map(num => {return {photo: <Photo image='https://vignette.wikia.nocookie.net/memoryalpha/images/5/52/Earl_Grey_tea%2C_hot.jpg/revision/latest?cb=20121209020531&path-prefix=en'/>, key: num}})} />
-        );
+        console.log(this.props.photoList)
+        if(this.props.photoList){
+            return (
+                    <PhotoView photoList={this.props.photoList} />
+                );
+        } else {
+            return (
+                <Typography variant="display1">No Photos Found :(</Typography>
+            );
+        }
     }
 }
 
-export default AllPhotos;
+const mapStateToProps = state => {
+    return {
+        photoList: state.photo.photos,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        //toggleDrawer: () => { dispatch(commonActions.toggleNavOpen()) }
+        uploadPhoto: file => { dispatch(photoActions.uploadPhoto(file));}
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AllPhotos);

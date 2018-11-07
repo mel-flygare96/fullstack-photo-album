@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { Drawer, List, ListItem, ListItemText, withStyles } from '@material-ui/core';
 
 const styles = theme => ({
@@ -21,14 +22,14 @@ const NavMenu = ({
     const navItems = (
         <div className={classes.list}>
             <List component="nav">
-                <ListItem button>
-                    <ListItemText primary="Test 1" />
+                <ListItem button component={Link} to='/'>
+                    <ListItemText primary="All Photos" />
                 </ListItem>
-                <ListItem button>
-                    <ListItemText primary="Test 2" />
+                <ListItem button component={Link} to='/'>
+                    <ListItemText primary="Albums" />
                 </ListItem>
-                <ListItem button>
-                    <ListItemText primary="Test 3" />
+                <ListItem button component={Link} to='/'>
+                    <ListItemText primary="Suggestions" />
                 </ListItem>
             </List>
         </div>
