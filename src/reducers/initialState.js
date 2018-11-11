@@ -3,6 +3,7 @@ const initialState = {
         navOpen: false
     },
     photo: {
+        nextId: 7,
         photos: [
             {
                 id: 1,

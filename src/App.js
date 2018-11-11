@@ -3,7 +3,7 @@ import './App.css';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import { Route, Switch } from 'react-router-dom';
 import theme from './theme';
-import AllPhotos from './components/AllPhotos';
+import PhotoAlbum from './components/PhotoAlbum';
 import Header from './components/Header';
 
 class App extends Component {
@@ -13,7 +13,7 @@ class App extends Component {
                 <div className="App">
                     <Header />
                     <Switch>
-                        <Route exact path='/' component={AllPhotos} />
+                        <Route exact path='/:image?' component={PhotoAlbum} />
                     </Switch>
                 </div>
             </MuiThemeProvider>
