@@ -6,17 +6,19 @@ import FullScreen from './FullScreen';
 
 const styles = theme => ({
     root: {
-        //width: '100%',
-        marginTop: theme.spacing.unit,
+        //width: '90%',
+        marginTop: 50,
         //flexGrow: 2,
         display: 'flex',
-        justifyContent: 'space-around',
+        justifyContent: 'center',
         flexWrap: 'wrap',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        // marginLeft: '5%',
+        // marginRight: '5%'
         //minHeight: 'calc(100vh - 72px)'
     },
     grid: {
-        width: '100%',
+        width: '90%',
         paddingLeft: '10%',
         paddingRight: '10%',
         //maxWidth: 1200,

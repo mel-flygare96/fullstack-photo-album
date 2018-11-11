@@ -7,8 +7,8 @@ import * as photoActions from '../actions/PhotoActions';
 const styles = theme => ({
     button: {
         position: 'absolute',
-        bottom: theme.spacing.unit * 8,
-        right: theme.spacing.unit * 10,
+        bottom: theme.spacing.unit * 6,
+        right: theme.spacing.unit * 6,
         margin: theme.spacing.unit,
         width: 80,
         height: 80,

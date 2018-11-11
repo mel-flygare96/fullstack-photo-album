@@ -16,7 +16,7 @@ const styles = theme => ({
         justifyContent: 'center',
         alignItems: 'center',
         overflow: 'hidden',
-        flexGrow: 2
+        flexGrow: 2,
     },
     paper: {
         width: '100%',
@@ -41,7 +41,7 @@ const Photo = ({
     // TODO: Don't use card for image display, make display full screen
     return (
         <Button className={classes.button} component={Link} to={"/" + id}>
-            <img src={image} alt={image}/>
+            <img src={image} alt={image} style={{height: 300}}/>
         </Button>
     );
 }

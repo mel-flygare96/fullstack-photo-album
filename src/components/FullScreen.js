@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles, Button, Grid } from '@material-ui/core';
+import { withStyles, Button, Grid, Chip } from '@material-ui/core';
 import ArrowLeft from '@material-ui/icons/ArrowLeft';
 import ArrowRight from '@material-ui/icons/ArrowRight';
 import CloseIcon from '@material-ui/icons/CloseRounded';
@@ -51,7 +51,7 @@ const FullScreen = ({
         <div className={classes.root}>
             <div className={classes.view}>
                 <div className={classes.buttonContainer}>
-                    <Button component={Link} className={classes.button} style={{float: 'left'}} to={"/" + prevId}>
+                    <Button disabled={!prevId} component={Link} className={classes.button} style={{float: 'left'}} to={"/" + prevId}>
                         <ArrowLeft style={{fontSize: 80}} />
                     </Button>  
                 </div>
@@ -60,7 +60,6 @@ const FullScreen = ({
                         <Grid container style={{height: '100%'}}>
                             <Grid item sm={10} />
                             <Grid item sm={1}>
-                            {/* TODO: implement image deletion */}
                                 <Button component={Link} to="/" style={{color: 'white', height: '100%'}}>
                                     <DeleteIcon style={{fontSize: 40}} onClick={() => handleDelete(image.id)}/>
                                 </Button>
@@ -73,10 +72,15 @@ const FullScreen = ({
                         </Grid>
                     </div>
                     <img src={image.photo} alt={image.photo} style={{margin: 'auto', maxWidth: 800}}/>  
-                    <div className={classes.toolBar}></div>
+                    <div className={classes.toolBar}>
+                        <Chip label="test 1" />
+                        <Chip label="test 2" />
+                        <Chip label="test 3" />
+                        <Chip label="test 4" />
+                    </div>
                 </div>
                 <div className={classes.buttonContainer}>
-                    <Button component={Link} className={classes.button} style={{float: 'right'}} to={"/" + nextId}>
+                    <Button disabled={nextId === -1} component={Link} className={classes.button} style={{float: 'right'}} to={"/" + nextId}>
                         <ArrowRight style={{fontSize: 80}} />
                     </Button>      
                 </div>

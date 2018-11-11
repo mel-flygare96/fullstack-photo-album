@@ -71,8 +71,8 @@ class PhotoAlbum extends React.Component {
                     return (
                         <FullScreen 
                             image={pic[0]} 
-                            prevId={prev ? prev.id : ""} 
-                            nextId={next ? next.id: ""}
+                            prevId={prev ? prev.id : 0} 
+                            nextId={next ? next.id : -1}
                             handleDelete={this.deletePhoto.bind(this)}
                         />
                     );
