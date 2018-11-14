@@ -7,8 +7,8 @@ import * as photoActions from '../actions/PhotoActions';
 const styles = theme => ({
     button: {
         position: 'absolute',
-        bottom: theme.spacing.unit * 8,
-        right: theme.spacing.unit * 10,
+        bottom: theme.spacing.unit * 6,
+        right: theme.spacing.unit * 6,
         margin: theme.spacing.unit,
         width: 80,
         height: 80,
@@ -20,15 +20,15 @@ class ImageUpload extends React.Component {
         if(input && input.files){
             let reader = new FileReader();
             let upload = this.props.uploadPhoto.bind(this);
+            let nextId = this.props.nextId;
             reader.onload = (function(file) {
                 return function(e){
                     upload(e.target.result);
-                    // TODO: change to use input.files[0].name?
                     let images = localStorage.getItem("images");
                     if(images){
-                        localStorage.setItem("images", images + " " + e.target.result);
+                        localStorage.setItem("images", images + " " + nextId + ":" + e.target.result);
                     } else {
-                        localStorage.setItem("images", e.target.result);
+                        localStorage.setItem("images", nextId + ":" + e.target.result);
                     }
                 }
             })(input.files[0]);
@@ -68,7 +68,7 @@ const styledUpload = withStyles(styles)(ImageUpload);
 
 const mapStateToProps = state => {
     return {
-
+        nextId: state.photo.nextId
     }
 }
 
