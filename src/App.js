@@ -10,8 +10,8 @@ class App extends Component {
     render() {
         return (
             <MuiThemeProvider theme={theme}>
+                <Header />
                 <div className="App">
-                    <Header />
                     <Switch>
                         <Route exact path='/:image?' component={PhotoAlbum} />
                     </Switch>

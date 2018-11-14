@@ -1,5 +1,17 @@
 import React from 'react';
-import { withStyles, Button, Grid, Chip } from '@material-ui/core';
+import { 
+    withStyles, 
+    Button, 
+    Grid, 
+    Chip, 
+    Typography,
+    Paper, 
+    Dialog, 
+    DialogTitle, 
+    DialogActions, 
+    DialogContent ,
+    DialogContentText
+} from '@material-ui/core';
 import ArrowLeft from '@material-ui/icons/ArrowLeft';
 import ArrowRight from '@material-ui/icons/ArrowRight';
 import CloseIcon from '@material-ui/icons/CloseRounded';
@@ -16,6 +28,7 @@ const styles = theme => ({
         background: '#263238',
         width: '100%',
         height: '100%',
+        marginTop: -5
         //minHeight: 'calc(100vh - 72px)'
     },
     buttonContainer: {
@@ -36,6 +49,16 @@ const styles = theme => ({
     },
     toolBar: {
         height: 100
+    },
+    tags: {
+        height: 100,
+        display: 'flex',
+        flexWrap: 'wrap',
+        alignItems: 'center'
+    },
+    chip: {
+        margin: theme.spacing.unit,
+        //marginRight: theme.spacing.unit * 2
     }
 });
 
@@ -44,7 +67,10 @@ const FullScreen = ({
     image,
     prevId,
     nextId,
-    handleDelete
+    handleDelete,
+    closeDialog,
+    openDialog,
+    open
 }) => {
     console.log(image.id - 1)
     return (
@@ -54,14 +80,30 @@ const FullScreen = ({
                     <Button disabled={!prevId} component={Link} className={classes.button} style={{float: 'left'}} to={"/" + prevId}>
                         <ArrowLeft style={{fontSize: 80}} />
                     </Button>  
+                    <Dialog open={open} onClose={closeDialog} aria-labelledby="title" aria-describedby="description">
+                        <DialogTitle id="title">Delete Photo?</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="description">
+                                Are you sure you want to delete this photo?
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={closeDialog}>
+                                No
+                            </Button>
+                            <Button component={Link} to="/" onClick={() => handleDelete(image.id)}>
+                                Yes
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                 </div>
                 <div style={{flexGrow: 2, display: 'flex', flexDirection: 'column', height: '100%'}}>
                     <div className={classes.toolBar}>
                         <Grid container style={{height: '100%'}}>
                             <Grid item sm={10} />
                             <Grid item sm={1}>
-                                <Button component={Link} to="/" style={{color: 'white', height: '100%'}}>
-                                    <DeleteIcon style={{fontSize: 40}} onClick={() => handleDelete(image.id)}/>
+                                <Button style={{color: 'white', height: '100%'}}>
+                                    <DeleteIcon style={{fontSize: 40}} onClick={openDialog}/>
                                 </Button>
                             </Grid>
                             <Grid item sm={1}>
@@ -72,12 +114,12 @@ const FullScreen = ({
                         </Grid>
                     </div>
                     <img src={image.photo} alt={image.photo} style={{margin: 'auto', maxWidth: 800}}/>  
-                    <div className={classes.toolBar}>
-                        <Chip label="test 1" />
-                        <Chip label="test 2" />
-                        <Chip label="test 3" />
-                        <Chip label="test 4" />
-                    </div>
+                        <Paper className={classes.tags}>
+                            <Typography variant="display1" style={{marginRight: 12, marginLeft: 8}}>Tags</Typography>
+                            {["test1", "test2", "test3", "test4"].map(chip => {
+                                return <Chip clickable variant="outlined" label={chip} className={classes.chip}></Chip>;
+                            })}
+                        </Paper>
                 </div>
                 <div className={classes.buttonContainer}>
                     <Button disabled={nextId === -1} component={Link} className={classes.button} style={{float: 'right'}} to={"/" + nextId}>

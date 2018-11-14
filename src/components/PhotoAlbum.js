@@ -8,7 +8,8 @@ import FullScreen from './FullScreen';
 
 class PhotoAlbum extends React.Component {
     state = {
-        viewing: -1
+        viewing: -1,
+        open: false
     }
 
     handleClose(){
@@ -29,6 +30,14 @@ class PhotoAlbum extends React.Component {
                         .join(" ")
         )
         this.props.deletePhoto(id);
+    }
+
+    openDialog(){
+        this.setState({open: true});
+    }
+
+    closeDialog(){
+        this.setState({open: false});
     }
 
     componentDidMount(prevState){
@@ -74,6 +83,9 @@ class PhotoAlbum extends React.Component {
                             prevId={prev ? prev.id : 0} 
                             nextId={next ? next.id : -1}
                             handleDelete={this.deletePhoto.bind(this)}
+                            closeDialog={this.closeDialog.bind(this)}
+                            openDialog={this.openDialog.bind(this)}
+                            open={this.state.open}
                         />
                     );
                 } else {
