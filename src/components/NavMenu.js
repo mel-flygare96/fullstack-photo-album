@@ -22,10 +22,10 @@ const NavMenu = ({
     const navItems = (
         <div className={classes.list}>
             <List component="nav">
-                <ListItem button component={Link} to='/'>
+                <ListItem button component={Link} to='/photo'>
                     <ListItemText primary="All Photos" />
                 </ListItem>
-                <ListItem button component={Link} to='/'>
+                <ListItem button component={Link} to='/album'>
                     <ListItemText primary="Albums" />
                 </ListItem>
                 <ListItem button component={Link} to='/'>

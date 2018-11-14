@@ -1,9 +1,9 @@
 import * as actionTypes from './actionTypes';
 
-export function uploadPhoto(file){
+export const uploadPhoto = file => {
     return { type: actionTypes.UPLOAD_PHOTO, photo: file };
 }
 
-export function deletePhoto(id){
+export const deletePhoto = id => {
     return { type: actionTypes.DELETE_PHOTO, id: id };
 }

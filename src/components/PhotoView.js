@@ -39,24 +39,28 @@ const styles = theme => ({
 
 const PhotoView = ({
     classes,
-    photoList,
-    viewing,
-    handleClick,
-    handleClose
+    list,
+    type,
+    albumID
 }) => {
+    console.log(list)
     return (
         <div className={classes.root}>
             <GridList cellHeight={300} cols={4} className={classes.grid}>
-                {photoList.map(photo => {
+                {list.map(photo => {
                         return (
-                            <GridListTile key={photo.id} cols={1} classes={{
-                                tile: classes.tile
-                            }} className={classes.gridItem}>
-                                <Photo image={photo.photo}
+                            <GridListTile 
+                                key={photo.id} 
+                                cols={1} 
+                                classes={{
+                                    tile: classes.tile
+                                }} 
+                                className={classes.gridItem}>
+                                <Photo 
+                                    image={photo.photo}
                                     id={photo.id}
-                                    handleClick={handleClick} 
-                                    handleClose={handleClose}
-                                    viewing={viewing}
+                                    type={type}
+                                    albumID={albumID}
                                 />
                             </GridListTile>
                         );

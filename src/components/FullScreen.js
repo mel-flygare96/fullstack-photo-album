@@ -70,14 +70,21 @@ const FullScreen = ({
     handleDelete,
     closeDialog,
     openDialog,
-    open
+    open,
+    type,
+    albumID
 }) => {
     console.log(image.id - 1)
     return (
         <div className={classes.root}>
             <div className={classes.view}>
                 <div className={classes.buttonContainer}>
-                    <Button disabled={!prevId} component={Link} className={classes.button} style={{float: 'left'}} to={"/" + prevId}>
+                    <Button 
+                        disabled={!prevId} 
+                        component={Link} 
+                        className={classes.button} 
+                        style={{float: 'left'}} 
+                        to={"/" + type + "/" + prevId}>
                         <ArrowLeft style={{fontSize: 80}} />
                     </Button>  
                     <Dialog open={open} onClose={closeDialog} aria-labelledby="title" aria-describedby="description">
@@ -91,7 +98,7 @@ const FullScreen = ({
                             <Button onClick={closeDialog}>
                                 No
                             </Button>
-                            <Button component={Link} to="/" onClick={() => handleDelete(image.id)}>
+                            <Button component={Link} to={albumID ? "/" + type + "/" + albumID : "/" + type} onClick={() => handleDelete(image.id)}>
                                 Yes
                             </Button>
                         </DialogActions>
@@ -107,7 +114,7 @@ const FullScreen = ({
                                 </Button>
                             </Grid>
                             <Grid item sm={1}>
-                                <Button component={Link} to="/" style={{color: 'white', height: '100%'}}>
+                                <Button component={Link} to={albumID ? "/" + type + "/" + albumID : "/" + type} style={{color: 'white', height: '100%'}}>
                                     <CloseIcon style={{fontSize: 40}} />
                                 </Button>
                             </Grid>
@@ -122,7 +129,12 @@ const FullScreen = ({
                         </Paper>
                 </div>
                 <div className={classes.buttonContainer}>
-                    <Button disabled={nextId === -1} component={Link} className={classes.button} style={{float: 'right'}} to={"/" + nextId}>
+                    <Button 
+                        disabled={nextId === -1} 
+                        component={Link} 
+                        className={classes.button} 
+                        style={{float: 'right'}} 
+                        to={"/" + type + "/" + nextId}>
                         <ArrowRight style={{fontSize: 80}} />
                     </Button>      
                 </div>

@@ -34,13 +34,12 @@ const Photo = ({
     classes,
     image,
     id,
-    viewing,
-    handleClick,
-    handleClose
+    type,
+    albumID
 }) => {
     // TODO: Don't use card for image display, make display full screen
     return (
-        <Button className={classes.button} component={Link} to={"/" + id}>
+        <Button className={classes.button} component={Link} to={type === "album" ? "/album/" + albumID + "/" + id : "/photo/" + id}>
             <img src={image} alt={image} style={{height: 300}}/>
         </Button>
     );

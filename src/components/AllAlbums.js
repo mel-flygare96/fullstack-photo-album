@@ -1,3 +1,4 @@
+import react from 'react';
 import React from 'react';
 import { connect } from 'react-redux';
 import Photo from './Photo';
@@ -6,9 +7,11 @@ import PhotoView from './PhotoView';
 import AlbumView from './AlbumView';
 import { Typography } from '@material-ui/core';
 import * as photoActions from '../actions/PhotoActions';
+import * as albumActions from '../actions/AlbumActions';
 import FullScreen from './FullScreen';
 
-class PhotoAlbum extends React.Component {
+class AllAlbums extends React.Component {
+
     state = {
         viewing: -1,
         open: false
@@ -43,6 +46,10 @@ class PhotoAlbum extends React.Component {
         this.setState({open: false});
     }
 
+    createAlbum(name){
+        this.props.createAlbum(name);
+    }
+
     componentDidMount(){
         // const { image } = this.props.match.params.image;
         // if(image && image != prevState.viewing){
@@ -57,31 +64,17 @@ class PhotoAlbum extends React.Component {
             })
         }
     }
-
-    // componentDidUpdate(prevProps){
-    //     let pic = this.props.match.params.image;
-    //     if(pic && pic != prevProps.match.params.image){
-    //         this.setState({viewing: pic});
-    //     }
-    // }
-
     render(){
-        let id = this.props.match.params.id;
-
-        //let TileType = (type === "album" && image === undefined ? Album : Photo);
-        if(id && id !== this.state.viewing){
-            this.clickImage(id);
-        } else if(!id && this.state.viewing !== -1){
-            this.clickImage(-1);
-        }
-        if(this.props.photoList){
-            if(this.state.viewing >= 0){
-                let pic = this.props.photoList.filter(photo => 
-                    photo.id == this.state.viewing
-                );
+        let albumID = this.props.match.params.id;
+        let image = this.props.match.params.image;
+        if(albumID){
+            let album = this.props.albumList.filter(item => item.id == albumID);
+            let photos = album.length ? this.props.photoList.filter(photo => album[0].photos.includes(photo.id)) : [];
+            if(image){
+                let pic = photos.filter(photo => photo.id == image);
                 if(pic.length){
-                    let prev = this.props.photoList[this.props.photoList.indexOf(pic[0]) - 1];
-                    let next = this.props.photoList[this.props.photoList.indexOf(pic[0]) + 1];
+                    let prev = photos[photos.indexOf(pic[0]) - 1];
+                    let next = photos[photos.indexOf(pic[0]) + 1];
                     return (
                         <FullScreen 
                             image={pic[0]} 
@@ -91,26 +84,27 @@ class PhotoAlbum extends React.Component {
                             closeDialog={this.closeDialog.bind(this)}
                             openDialog={this.openDialog.bind(this)}
                             open={this.state.open}
-                            type={"photo"}
+                            type={"album"}
+                            albumID={albumID}
                         />
                     );
-                } else {
-                    return null;
                 }
-            } else {
-                return (
-                    <PhotoView 
-                        list={this.props.photoList} 
-                        type={"photo"}
-                        albumID={-1}
-                    />
-                );
             }
-        } else {
             return (
-                <Typography variant="display1">No Photos Found :(</Typography>
-            );
+                <PhotoView 
+                    list={photos}
+                    type="album"
+                    albumID={albumID}
+                />
+            )
         }
+        return (
+            <AlbumView
+                albumList={this.props.albumList}
+                photoList={this.props.photoList}
+                createAlbum={this.createAlbum.bind(this)}
+            />
+        );
     }
 }
 
@@ -123,10 +117,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        //toggleDrawer: () => { dispatch(commonActions.toggleNavOpen()) }
         uploadPhoto: file => { dispatch(photoActions.uploadPhoto(file));},
-        deletePhoto: id => { dispatch(photoActions.deletePhoto(id)); },
+        createAlbum: name => { dispatch(albumActions.createAlbum(name));}
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PhotoAlbum);
+export default connect(mapStateToProps, mapDispatchToProps)(AllAlbums);
