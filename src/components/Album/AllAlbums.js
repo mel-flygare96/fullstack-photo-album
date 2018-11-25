@@ -1,14 +1,14 @@
 import react from 'react';
 import React from 'react';
 import { connect } from 'react-redux';
-import Photo from './Photo';
+import Photo from '../Photo/Photo';
 import Album from './Album';
-import PhotoView from './PhotoView';
+import PhotoView from '../Photo/PhotoView';
 import AlbumView from './AlbumView';
-import { Typography } from '@material-ui/core';
-import * as photoActions from '../actions/PhotoActions';
-import * as albumActions from '../actions/AlbumActions';
-import FullScreen from './FullScreen';
+import { Typography, TextField } from '@material-ui/core';
+import * as photoActions from '../../actions/PhotoActions';
+import * as albumActions from '../../actions/AlbumActions';
+import FullScreen from '../Photo/FullScreen';
 
 class AllAlbums extends React.Component {
 
@@ -17,15 +17,15 @@ class AllAlbums extends React.Component {
         open: false
     }
 
-    handleClose(){
+    handleClose = () => {
         this.setState({viewing: -1});
     }
 
-    clickImage(id){
+    clickImage = id => {
         this.setState({viewing: id});
     }
 
-    deletePhoto(id){
+    deletePhoto = id => {
         localStorage.setItem("images", 
             localStorage.getItem("images")
                         .split(" ")
@@ -38,38 +38,38 @@ class AllAlbums extends React.Component {
         this.props.deletePhoto(id);
     }
 
-    openDialog(){
+    openDialog = () => {
         this.setState({open: true});
     }
 
-    closeDialog(){
+    closeDialog = () => {
         this.setState({open: false});
     }
 
-    createAlbum(name){
-        this.props.createAlbum(name);
+    createAlbum = (id, name, photos) => {
+        this.props.createAlbum(id, name, photos);
     }
 
     componentDidMount(){
-        // const { image } = this.props.match.params.image;
-        // if(image && image != prevState.viewing){
-        //     this.setState({viewing: image});
-        // } else if(!image){
-        //     this.setState({viewing: -1});
-        // }
         let images = localStorage.getItem("images");
         if(images){
             images.split(" ").forEach(file => {
                 this.props.uploadPhoto(file.slice(file.indexOf(":") + 1));
             })
         }
+        Object.keys(localStorage).forEach(key => {
+            if(key.includes("album")){
+                let album = localStorage.getItem(key).split("|");
+                this.createAlbum(album[0], album[1], album[2]);
+            }
+        })
     }
     render(){
         let albumID = this.props.match.params.id;
         let image = this.props.match.params.image;
         if(albumID){
-            let album = this.props.albumList.filter(item => item.id == albumID);
-            let photos = album.length ? this.props.photoList.filter(photo => album[0].photos.includes(photo.id)) : [];
+            let album = this.props.albumList[albumID];
+            let photos = album ? this.props.photoList.filter(photo => album.photos.includes(photo.id)) : [];
             if(image){
                 let pic = photos.filter(photo => photo.id == image);
                 if(pic.length){
@@ -80,9 +80,9 @@ class AllAlbums extends React.Component {
                             image={pic[0]} 
                             prevId={prev ? prev.id : 0} 
                             nextId={next ? next.id : -1}
-                            handleDelete={this.deletePhoto.bind(this)}
-                            closeDialog={this.closeDialog.bind(this)}
-                            openDialog={this.openDialog.bind(this)}
+                            handleDelete={this.deletePhoto}
+                            closeDialog={this.closeDialog}
+                            openDialog={this.openDialog}
                             open={this.state.open}
                             type={"album"}
                             albumID={albumID}
@@ -112,13 +112,14 @@ const mapStateToProps = state => {
     return {
         photoList: state.photo.photos,
         albumList: state.album.albums,
+        nextID: state.album.nextId
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         uploadPhoto: file => { dispatch(photoActions.uploadPhoto(file));},
-        createAlbum: name => { dispatch(albumActions.createAlbum(name));}
+        createAlbum: (id, name, photos) => { dispatch(albumActions.createAlbum(id, name, photos));}
     }
 }
 

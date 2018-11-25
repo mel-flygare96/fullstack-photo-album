@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as commonActions from '../actions/CommonActions';
+import * as commonActions from '../../actions/CommonActions';
 import Navbar from './Navbar';
 import NavMenu from './NavMenu';
 

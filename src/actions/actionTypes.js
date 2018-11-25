@@ -5,3 +5,4 @@ export const UPLOAD_PHOTO = "UPLOAD_PHOTO";
 export const DELETE_PHOTO = "DELETE_PHOTO";
 // ALBUM ACTIONS
 export const CREATE_ALBUM = "CREATE_ALBUM";
+export const ADD_TO_ALBUM = "ADD_TO_ALBUM";

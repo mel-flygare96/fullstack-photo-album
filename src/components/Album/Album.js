@@ -5,9 +5,10 @@ import {
     Dialog, 
     Card, 
     CardActionArea, 
-    CardContent 
+    CardContent,
+    Typography
 } from '@material-ui/core';
-import FullScreen from './FullScreen';
+import FullScreen from '../Photo/FullScreen';
 import { Link } from 'react-router-dom';
 
 const styles = theme => ({
@@ -38,7 +39,10 @@ const Album = ({
     // TODO: Don't use card for image display, make display full screen
     return (
         <Button className={classes.button} component={Link} to={"/album/" + id}>
-            <img src={image} alt={image} style={{height: 300}}/>
+            {image != "" ?
+                <img src={image} alt={image} style={{height: 300}}/>
+            : <Typography variant="display1">No Photo</Typography>
+            }
         </Button>
     );
 }

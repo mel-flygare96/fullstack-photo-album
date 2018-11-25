@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Photo from './Photo';
-import Album from './Album';
+import Album from '../Album/Album';
 import PhotoView from './PhotoView';
-import AlbumView from './AlbumView';
+import AlbumView from '../Album/AlbumView';
 import { Typography } from '@material-ui/core';
-import * as photoActions from '../actions/PhotoActions';
+import * as photoActions from '../../actions/PhotoActions';
 import FullScreen from './FullScreen';
 
 class PhotoAlbum extends React.Component {
@@ -14,15 +14,15 @@ class PhotoAlbum extends React.Component {
         open: false
     }
 
-    handleClose(){
+    handleClose = () => {
         this.setState({viewing: -1});
     }
 
-    clickImage(id){
+    clickImage = id => {
         this.setState({viewing: id});
     }
 
-    deletePhoto(id){
+    deletePhoto = id => {
         localStorage.setItem("images", 
             localStorage.getItem("images")
                         .split(" ")
@@ -31,19 +31,19 @@ class PhotoAlbum extends React.Component {
                         })
                         .join(" ")
         )
-        this.props.closeDialog();
+        this.closeDialog();
         this.props.deletePhoto(id);
     }
 
-    openDialog(){
+    openDialog = () => {
         this.setState({open: true});
     }
 
-    closeDialog(){
+    closeDialog = () => {
         this.setState({open: false});
     }
 
-    componentDidMount(){
+    componentDidMount = () => {
         // const { image } = this.props.match.params.image;
         // if(image && image != prevState.viewing){
         //     this.setState({viewing: image});
@@ -67,6 +67,7 @@ class PhotoAlbum extends React.Component {
 
     render(){
         let id = this.props.match.params.id;
+        console.log(id)
 
         //let TileType = (type === "album" && image === undefined ? Album : Photo);
         if(id && id !== this.state.viewing){
@@ -87,9 +88,9 @@ class PhotoAlbum extends React.Component {
                             image={pic[0]} 
                             prevId={prev ? prev.id : 0} 
                             nextId={next ? next.id : -1}
-                            handleDelete={this.deletePhoto.bind(this)}
-                            closeDialog={this.closeDialog.bind(this)}
-                            openDialog={this.openDialog.bind(this)}
+                            handleDelete={this.deletePhoto}
+                            closeDialog={this.closeDialog}
+                            openDialog={this.openDialog}
                             open={this.state.open}
                             type={"photo"}
                         />

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Grid, withStyles, GridList, GridListTile, Button, Icon, GridListTileBar } from '@material-ui/core';
-import Album from './Album';
-import AddIcon from '@material-ui/icons/Add';
+import { Grid, withStyles, GridList, GridListTile } from '@material-ui/core';
+import Photo from './Photo';
+import ImageUpload from '../Common/ImageUpload';
+import FullScreen from './FullScreen';
 
 const styles = theme => ({
     root: {
@@ -36,34 +37,31 @@ const styles = theme => ({
     }
 });
 
-const AlbumView = ({
+const PhotoView = ({
     classes,
-    albumList,
-    photoList,
-    createAlbum
+    list,
+    type,
+    albumID,
 }) => {
-    // TODO: Implement ability to type name of album / change name / select photos
+    console.log(list)
     return (
         <div className={classes.root}>
             <GridList cellHeight={300} cols={4} className={classes.grid}>
-                {albumList.map(album => {
-                        let image = photoList.filter(photo => photo.id === album.photos[0])[0];
+                {list.map(photo => {
                         return (
                             <GridListTile 
-                                key={album.id} 
+                                key={photo.id} 
                                 cols={1} 
                                 classes={{
                                     tile: classes.tile
                                 }} 
-                                className={classes.gridItem}>
-                                <Album 
-                                    image={image ? image.photo : ""}
-                                    id={album.id}
-                                />
-                                <GridListTileBar 
-                                    style={{textAlign: 'left'}}
-                                    title={album.name}
-                                    subtitle={<span>Photos: {album.photos.length}</span>}
+                                className={classes.gridItem}
+                            >
+                                <Photo 
+                                    image={photo.photo}
+                                    id={photo.id}
+                                    type={type}
+                                    albumID={albumID}
                                 />
                             </GridListTile>
                         );
@@ -72,14 +70,10 @@ const AlbumView = ({
                 {/* <GridListTile cols={1} className={classes.gridItem}>
                     <ImageUpload />
                 </GridListTile> */}
-                <GridListTile>
-                    <Button color="secondary" style={{width: '100%', height: '100%'}} onClick={() => createAlbum('test')}>
-                        <AddIcon style={{fontSize: 60}}/>
-                    </Button>
-                </GridListTile>
             </GridList>
+            <ImageUpload type={type} albumID={albumID}/>
         </div>
     );
 }
 
-export default withStyles(styles)(AlbumView);
+export default withStyles(styles)(PhotoView);

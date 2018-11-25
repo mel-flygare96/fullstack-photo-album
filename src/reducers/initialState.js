@@ -33,18 +33,18 @@ const initialState = {
     },
     album: {
         nextId: 3,
-        albums: [
-            {
+        albums: {
+            1: {
                 id: 1,
                 name: 'Picard Day',
                 photos: [1,2,3,4,5,6]
             },
-            {
+            2: {
                 id: 2,
                 name: 'Test',
                 photos: [7]
             }
-        ]
+        }
     }
 }
 

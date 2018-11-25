@@ -9,4 +9,7 @@ export default createMuiTheme({
         secondary: pink,
         error: red
     },
+    typography: {
+        useNextVariants: true
+    }
 })
