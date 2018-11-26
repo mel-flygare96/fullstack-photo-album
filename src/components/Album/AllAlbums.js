@@ -51,25 +51,26 @@ class AllAlbums extends React.Component {
     }
 
     componentDidMount(){
-        let images = localStorage.getItem("images");
-        if(images){
-            images.split(" ").forEach(file => {
-                this.props.uploadPhoto(file.slice(file.indexOf(":") + 1));
-            })
-        }
         Object.keys(localStorage).forEach(key => {
             if(key.includes("album")){
                 let album = localStorage.getItem(key).split("|");
-                this.createAlbum(album[0], album[1], album[2]);
+                this.createAlbum(parseInt(album[0]), album[1], album[2] ? 
+                    album[2].split(',').map(id => parseInt(id))
+                    : []
+                );
+            } else if(key.includes("photo")){
+                let photo = localStorage.getItem(key).split("|");
+                this.props.uploadPhoto(photo);
             }
         })
     }
+
     render(){
         let albumID = this.props.match.params.id;
         let image = this.props.match.params.image;
         if(albumID){
             let album = this.props.albumList[albumID];
-            let photos = album ? this.props.photoList.filter(photo => album.photos.includes(photo.id)) : [];
+            let photos = album ? Object.values(this.props.photoList).filter(photo => album.photos.includes(photo.id)) : [];
             if(image){
                 let pic = photos.filter(photo => photo.id == image);
                 if(pic.length){
@@ -118,7 +119,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        uploadPhoto: file => { dispatch(photoActions.uploadPhoto(file));},
+        uploadPhoto: photo => { dispatch(photoActions.uploadPhoto(photo));},
         createAlbum: (id, name, photos) => { dispatch(albumActions.createAlbum(id, name, photos));}
     }
 }

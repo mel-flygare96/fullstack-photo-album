@@ -48,10 +48,11 @@ const AlbumView = ({
     return (
         <div className={classes.root}>
             <GridList cellHeight={300} cols={4} className={classes.grid}>
+                {console.log(albumList)}
                 {Object.values(albumList).map(album => {
                     let image = "";
                     if(album.photos.length){
-                        image = photoList.filter(photo => photo.id === album.photos[0]);
+                        image = Object.values(photoList).filter(photo => photo.id === album.photos[0]);
                     }
                     return (
                         <GridListTile 

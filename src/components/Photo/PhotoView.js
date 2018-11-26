@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, withStyles, GridList, GridListTile } from '@material-ui/core';
+import { Grid, withStyles, GridList, GridListTile, Typography } from '@material-ui/core';
 import Photo from './Photo';
 import ImageUpload from '../Common/ImageUpload';
 import FullScreen from './FullScreen';
@@ -44,36 +44,45 @@ const PhotoView = ({
     albumID,
 }) => {
     console.log(list)
-    return (
-        <div className={classes.root}>
-            <GridList cellHeight={300} cols={4} className={classes.grid}>
-                {list.map(photo => {
-                        return (
-                            <GridListTile 
-                                key={photo.id} 
-                                cols={1} 
-                                classes={{
-                                    tile: classes.tile
-                                }} 
-                                className={classes.gridItem}
-                            >
-                                <Photo 
-                                    image={photo.photo}
-                                    id={photo.id}
-                                    type={type}
-                                    albumID={albumID}
-                                />
-                            </GridListTile>
-                        );
-                    })
-                }
-                {/* <GridListTile cols={1} className={classes.gridItem}>
-                    <ImageUpload />
-                </GridListTile> */}
-            </GridList>
-            <ImageUpload type={type} albumID={albumID}/>
-        </div>
-    );
+    if(Object.keys(list).length){
+        return (
+            <div className={classes.root}>
+                <GridList cellHeight={300} cols={4} className={classes.grid}>
+                    {Object.values(list).map(photo => {
+                            return (
+                                <GridListTile 
+                                    key={photo.id} 
+                                    cols={1} 
+                                    classes={{
+                                        tile: classes.tile
+                                    }} 
+                                    className={classes.gridItem}
+                                >
+                                    <Photo 
+                                        image={photo.photo}
+                                        id={photo.id}
+                                        type={type}
+                                        albumID={albumID}
+                                    />
+                                </GridListTile>
+                            );
+                        })
+                    }
+                    {/* <GridListTile cols={1} className={classes.gridItem}>
+                        <ImageUpload />
+                    </GridListTile> */}
+                </GridList>
+                <ImageUpload type={type} albumID={albumID}/>
+            </div>
+        );
+    } else {
+        return (
+            <div>
+                <Typography variant="h2">No Photos Found :(</Typography>
+                <ImageUpload type={type} albumID={albumID}/>
+            </div>
+        )        
+    }
 }
 
 export default withStyles(styles)(PhotoView);

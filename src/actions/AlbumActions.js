@@ -1,7 +1,7 @@
 import * as actionTypes from './actionTypes';
 
 export const createAlbum = (id, name, photos) => {
-    return { type: actionTypes.CREATE_ALBUM, id: id, name: name, photos: photos };
+    return { type: actionTypes.CREATE_ALBUM, id: id, name: name, photos: photos !== "" ? photos : [] };
 } 
 
 export const addToAlbum = (photoList, albumID) => {

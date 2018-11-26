@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button, SvgIcon, Input, withStyles, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
@@ -25,8 +26,22 @@ const styles = theme => ({
         //width: 80,
         //height: 80
     },
-
 })
+
+const savePhoto = (src, id) => {
+    let savedPhoto = localStorage.getItem("photo-" + id);
+    if(!savedPhoto){
+        localStorage.setItem("photo-" + id, id + "|" + src);
+    }
+}
+
+const saveAlbum = (id, photos) => {
+    let savedAlbum = localStorage.getItem("album-" + id);
+    if(savedAlbum){
+        let name = savedAlbum.split("|")[1];
+        localStorage.setItem("album-" + id, id + "|" + name + "|" + photos.toString());
+    }
+}
 
 class ImageUpload extends React.Component {
     state = {
@@ -35,28 +50,25 @@ class ImageUpload extends React.Component {
         albumPhotos: []
     }
     fileUpload (input, albumID) {
-        console.log("wut")
         if(input && input.files){
             let reader = new FileReader();
             let upload = this.props.uploadPhoto.bind(this);
             let nextId = this.props.nextId;
             reader.onload = (function(file) {
                 return function(e){
-                    upload(e.target.result);
-                    let images = localStorage.getItem("images");
-                    if(images){
-                        localStorage.setItem("images", images + " " + nextId + ":" + e.target.result);
-                    } else {
-                        localStorage.setItem("images", nextId + ":" + e.target.result);
-                    }
+                    savePhoto(e.target.result, nextId);
+                    upload([-1, e.target.result]);
                 }
             })(input.files[0]);
             reader.readAsDataURL(input.files[0]);
         }
         if(albumID){
-            console.log(albumID);
             let photos = this.props.albumList[albumID].photos;
             photos.push(this.props.nextId);
+            let albumPhotos = this.state.albumPhotos;
+            albumPhotos.push(this.props.nextId);
+            this.setState({albumPhotos: albumPhotos});
+            saveAlbum(albumID, this.state.albumPhotos);
             this.props.addToAlbum(photos, albumID);
         }
     }
@@ -70,6 +82,7 @@ class ImageUpload extends React.Component {
     }
 
     openDialog = () => {
+        console.log("opening")
         this.setState({dOpen: true});
     }
 
@@ -92,15 +105,18 @@ class ImageUpload extends React.Component {
 
     componentDidMount = () => {
         if(this.props.type === "album"){
-            this.props.albumList[this.props.albumID].photos.forEach(photo => {
-                let newAlbum = this.state.albumPhotos;
-                newAlbum.push(photo);
-                this.setState({albumPhotos: newAlbum});
-            })
+            if(this.props.albumList[this.props.albumID]){
+                this.props.albumList[this.props.albumID].photos.forEach(photo => {
+                    let newAlbum = this.state.albumPhotos;
+                    newAlbum.push(photo);
+                    this.setState({albumPhotos: newAlbum});
+                })
+            }
         }
     }
 
     handleSubmit = () => {
+        saveAlbum(this.props.albumID, this.state.albumPhotos);
         this.props.addToAlbum(this.state.albumPhotos, this.props.albumID);
         this.closeDialog();
     }
@@ -133,7 +149,7 @@ class ImageUpload extends React.Component {
                         ariaLabel="Album SpeedDial"
                         icon={<SpeedDialIcon />}
                         onBlur={this.handleClose}
-                        onClose={this.handleClose}
+                        onClick={this.handleClose}
                         onMouseEnter={this.handleOpen}
                         onMouseLeave={this.handleClose}
                         open={this.state.open}
@@ -209,5 +225,12 @@ const mapDispatchToProps = dispatch => {
         addToAlbum: (photoID, albumID) => { dispatch(albumActions.addToAlbum(photoID, albumID)); }
     }
 }
+
+ImageUpload.propTypes = {
+    classes: PropTypes.object.isRequired,
+    nextId: PropTypes.number.isRequired,
+    photoList: PropTypes.object.isRequired,
+    albumList: PropTypes.object.isRequired
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(styledUpload);

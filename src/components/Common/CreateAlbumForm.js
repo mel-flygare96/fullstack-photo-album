@@ -34,9 +34,9 @@ const styles = theme => ({
 });
 
 const saveAlbum = (name, id) => {
-    let savedAlbums = localStorage.getItem("album-" + name);
-    if(!savedAlbums){
-        localStorage.setItem("album-" + name, id + "|" + name + "|");
+    let savedAlbum = localStorage.getItem("album-" + id);
+    if(!savedAlbum){
+        localStorage.setItem("album-" + id, id + "|" + name + "|");
     }
 }
 
@@ -56,7 +56,7 @@ class CreateAlbumForm extends React.Component {
     }
 
     handleSubmit = name => {
-        this.props.createAlbum(name);
+        this.props.createAlbum(-1, name, []);
         this.setState({name: ""});
         console.log(this.props.nextID)
         saveAlbum(name, this.props.nextID);
@@ -76,7 +76,7 @@ class CreateAlbumForm extends React.Component {
         console.log(this.props.nextID)
         return (
             <div className={classes.container}>
-                <Button color="secondary" className={classes.button} onClick={this.openForm}>
+                <Button variant="outlined" color="secondary" className={classes.button} onClick={this.openForm}>
                     <AddIcon style={{fontSize: 50}}/>
                 </Button>
                 <Dialog className={classes.dialog} open={this.state.open} aria-labelledby="create-album-title">
@@ -124,7 +124,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         //uploadPhoto: file => { dispatch(photoActions.uploadPhoto(file));},
-        createAlbum: name => { dispatch(albumActions.createAlbum(name)); },
+        createAlbum: (id, name, photos) => { dispatch(albumActions.createAlbum(id, name, photos)); },
     }
 }
 

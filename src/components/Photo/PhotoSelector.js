@@ -66,7 +66,7 @@ const PhotoSelector = ({
             <Dialog open={open}>
                 <DialogContent>
                     <GridList cellHeight={150} cols={4}>
-                        {photoList.map(photo => {
+                        {Object.values(photoList).map(photo => {
                             return (
                                 <GridListTile
                                     key={photo.id} 
