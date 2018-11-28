@@ -7,8 +7,8 @@ import deepOrange from '@material-ui/core/colors/deepOrange';
 
 export default createMuiTheme({
     palette: {
-        primary: green,
-        secondary: deepOrange,
+        primary: blue,
+        secondary: pink,
         error: red
     },
     typography: {
