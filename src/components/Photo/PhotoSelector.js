@@ -34,6 +34,9 @@ const styles = theme => ({
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%'
+    },
+    paper: {
+        width: 600
     }
 });
 
@@ -63,7 +66,7 @@ const PhotoSelector = ({
 }) => {
     return (
         <div className={classes.root}>
-            <Dialog open={open}>
+            <Dialog open={open} classes={{paper: classes.paper}}>
                 <DialogContent>
                     <GridList cellHeight={150} cols={4}>
                         {Object.values(photoList).map(photo => {

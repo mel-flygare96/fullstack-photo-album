@@ -45,6 +45,7 @@ const AlbumView = ({
 }) => {
     // TODO: Implement ability to type name of album / change name / select photos
     console.log(albumList)
+    console.log(Object.keys(photoList))
     return (
         <div className={classes.root}>
             <GridList cellHeight={300} cols={4} className={classes.grid}>
@@ -54,6 +55,7 @@ const AlbumView = ({
                     if(album.photos.length){
                         image = Object.values(photoList).filter(photo => photo.id === album.photos[0]);
                     }
+                    let length = album.photos.filter(photo => Object.keys(photoList).includes(photo.toString())).length;
                     return (
                         <GridListTile 
                             key={album.id} 
@@ -69,7 +71,7 @@ const AlbumView = ({
                             <GridListTileBar 
                                 style={{textAlign: 'left'}}
                                 title={album.name}
-                                subtitle={<span>Photos: {album.photos.length}</span>}
+                                subtitle={<span>Photos: {length}</span>}
                             />
                         </GridListTile>
                     );
