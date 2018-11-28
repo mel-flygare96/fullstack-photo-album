@@ -34,6 +34,12 @@ const styles = theme => ({
     tile: {
         display: 'flex',
         width: '100%'
+    },
+    noPhoto: {
+        height: '100%',
+        display: 'flex',    
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });
 
@@ -77,7 +83,7 @@ const PhotoView = ({
         );
     } else {
         return (
-            <div>
+            <div className={classes.noPhoto}>
                 <Typography variant="h2">No Photos Found :(</Typography>
                 <ImageUpload type={type} albumID={albumID}/>
             </div>

@@ -81,8 +81,9 @@ class ImageUpload extends React.Component {
         this.setState({open: false});
     }
 
-    openDialog = () => {
+    openDialog = e => {
         console.log("opening")
+        e.stopPropagation();
         this.setState({dOpen: true});
     }
 
