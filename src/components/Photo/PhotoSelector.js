@@ -105,7 +105,7 @@ const PhotoSelector = ({
                 </DialogContent>
                 <DialogActions>
                     <Button color="primary" onClick={handleSubmit}>
-                        Add
+                        Finish
                     </Button>
                     <Button color="primary" onClick={closeDialog}>
                         Cancel
