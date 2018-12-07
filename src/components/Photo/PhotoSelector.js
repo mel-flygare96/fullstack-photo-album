@@ -40,6 +40,7 @@ const styles = theme => ({
     }
 });
 
+// Component for individual checkbox button
 const PhotoCheckbox = ({
     classes,
     image,
@@ -55,6 +56,7 @@ const PhotoCheckbox = ({
     );
 }
 
+// photo selector component to add existing photos to an album
 const PhotoSelector = ({
     classes,
     open,

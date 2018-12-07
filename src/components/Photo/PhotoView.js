@@ -43,6 +43,7 @@ const styles = theme => ({
     }
 });
 
+// Presentational component for rendering a grid of photos
 const PhotoView = ({
     classes,
     list,

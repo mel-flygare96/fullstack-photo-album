@@ -2,12 +2,7 @@ import React from 'react';
 import { 
     withStyles, 
     Button, 
-    Dialog, 
-    Card, 
-    CardActionArea, 
-    CardContent 
 } from '@material-ui/core';
-import FullScreen from './FullScreen';
 import { Link } from 'react-router-dom';
 
 const styles = theme => ({
@@ -30,6 +25,7 @@ const styles = theme => ({
     }
 });
 
+// presentational component to render a single photo box
 const Photo = ({
     classes,
     image,

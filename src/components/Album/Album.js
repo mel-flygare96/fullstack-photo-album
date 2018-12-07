@@ -31,12 +31,14 @@ const styles = theme => ({
     }
 });
 
+/* 
+    This presentational component renders a single album box
+*/
 const Album = ({
     classes,
     image,
     id,
 }) => {
-    // TODO: Don't use card for image display, make display full screen
     return (
         <Button className={classes.button} component={Link} to={"/album/" + id}>
             {image != "" ?

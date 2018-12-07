@@ -43,24 +43,37 @@ const saveAlbum = (id, photos) => {
     }
 }
 
+/* 
+    This is a stateful container component controlling the image upload
+    button / speed dial. This is a class so that any components
+    wanting to use it need not handle any callbacks
+*/
 class ImageUpload extends React.Component {
     state = {
         open: false,
         dOpen: false,
         albumPhotos: []
     }
+
+    // Function called when the image to be uploaded is selected
     fileUpload (input, albumID) {
+        // Bind the class scope to the upload function for closure
+        let upload = this.props.uploadPhoto.bind(this);
+        let nextId = this.props.nextId;
+        console.log(input.files)
         if(input && input.files){
-            let reader = new FileReader();
-            let upload = this.props.uploadPhoto.bind(this);
-            let nextId = this.props.nextId;
-            reader.onload = (function(file) {
-                return function(e){
-                    savePhoto(e.target.result, nextId);
-                    upload([-1, e.target.result]);
-                }
-            })(input.files[0]);
-            reader.readAsDataURL(input.files[0]);
+            for(let i = 0; i < input.files.length; i++){
+                (function(image){
+                    let reader = new FileReader();
+                    reader.onload = function(thing) {
+                        return function(e){
+                            savePhoto(e.target.result, nextId + i);
+                            upload([-1, e.target.result]);
+                        }
+                    }(image);
+                    reader.readAsDataURL(image);
+                })(input.files[i]);
+            }
         }
         if(albumID){
             let photos = this.props.albumList[albumID].photos;
@@ -73,24 +86,29 @@ class ImageUpload extends React.Component {
         }
     }
 
+    // This handles the opening of the speed dial
     handleOpen = () => {
         this.setState({open: true});
     }
 
+    // This handles the closing of the speed dial
     handleClose = () => {
         this.setState({open: false});
     }
 
+    // This handles the opening of the photo selector dialog
     openDialog = e => {
         console.log("opening")
         e.stopPropagation();
         this.setState({dOpen: true});
     }
 
+    // This handles the closing of the photo selector dialog
     closeDialog = () => {
         this.setState({dOpen: false});
     }
 
+    // The handles the checking of photos selected by the photo selector
     selectPhoto = id => event => {
         console.log(id)
         if(event.target.checked){
@@ -104,6 +122,7 @@ class ImageUpload extends React.Component {
         }
     }
 
+    // When component mounts, load the albums and photos from local storage
     componentDidMount = () => {
         if(this.props.type === "album"){
             if(this.props.albumList[this.props.albumID]){
@@ -116,6 +135,7 @@ class ImageUpload extends React.Component {
         }
     }
 
+    // Save the photos checked by the photo selector and add them to the associated album
     handleSubmit = () => {
         saveAlbum(this.props.albumID, this.state.albumPhotos);
         this.props.addToAlbum(this.state.albumPhotos, this.props.albumID);
@@ -194,6 +214,7 @@ class ImageUpload extends React.Component {
 
                 <AddPhoto />
                 <input type="file" 
+                    multiple
                     accept="image/*"
                     id="upload"
                     onChange={e => this.fileUpload(e.target, undefined)}
@@ -210,8 +231,10 @@ class ImageUpload extends React.Component {
     }
 }
 
+// Apply the CSS in JS styles
 const styledUpload = withStyles(styles)(ImageUpload);
 
+// Get next photo id, photoList and albumList from state
 const mapStateToProps = state => {
     return {
         nextId: state.photo.nextId,
@@ -220,6 +243,7 @@ const mapStateToProps = state => {
     }
 }
 
+// Redux dispatches
 const mapDispatchToProps = dispatch => {
     return {
         uploadPhoto: file => { dispatch(photoActions.uploadPhoto(file)); },

@@ -62,6 +62,8 @@ const styles = theme => ({
     }
 });
 
+// This component renders a fullscreen view of the photo, along with delete button
+// close button, and buttons to go to the next and previous photos
 const FullScreen = ({
     classes,
     image,
@@ -79,6 +81,7 @@ const FullScreen = ({
         <div className={classes.root}>
             <div className={classes.view}>
                 <div className={classes.buttonContainer}>
+                    {/* Button to go to the next phot. Disabled if no next photo. */}
                     <Button 
                         disabled={!prevId} 
                         component={Link} 
@@ -129,6 +132,7 @@ const FullScreen = ({
                         </Paper>
                 </div>
                 <div className={classes.buttonContainer}>
+                    {/* Button to go to the next photo. Disabled if no next photo. */}
                     <Button 
                         disabled={nextId === -1} 
                         component={Link} 

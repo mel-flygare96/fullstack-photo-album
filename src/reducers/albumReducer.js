@@ -1,5 +1,6 @@
 import initialState from './initialState';
 
+// Reducer for album actions
 export default function album(state = initialState.album, action){
     switch(action.type){
         case 'CREATE_ALBUM': {

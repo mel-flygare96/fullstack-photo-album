@@ -4,6 +4,9 @@ import * as commonActions from '../../actions/CommonActions';
 import Navbar from './Navbar';
 import NavMenu from './NavMenu';
 
+/* 
+    This component is a container for the app bar
+*/
 class Header extends React.Component {
     render(){
         return (

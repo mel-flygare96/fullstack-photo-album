@@ -4,6 +4,7 @@ import { AppBar, Toolbar, Typography, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { withStyles } from '@material-ui/core/styles';
 
+// CSS in JS styles for this component
 const styles = theme => ({
     root: {
         flexGrow: 1
@@ -21,6 +22,10 @@ const styles = theme => ({
     navbar: theme.mixins.toolbar,
 });
 
+/* 
+    Presentational component for the navbar at the top of the page
+    Takes callback to handle toggling of menu drawer
+*/
 const Navbar = ({
     classes,
     toggleDrawer

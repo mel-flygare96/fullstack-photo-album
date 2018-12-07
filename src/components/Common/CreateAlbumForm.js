@@ -15,6 +15,7 @@ import {
 import AddIcon from '@material-ui/icons/Add';
 import * as albumActions from '../../actions/AlbumActions';
 
+// CSS in JS styles for this component
 const styles = theme => ({
     container: {
         height: '100%',
@@ -33,6 +34,7 @@ const styles = theme => ({
     },
 });
 
+// Save the album to local storage
 const saveAlbum = (name, id) => {
     let savedAlbum = localStorage.getItem("album-" + id);
     if(!savedAlbum){
@@ -49,12 +51,14 @@ class CreateAlbumForm extends React.Component {
         open: false
     }
 
+    // Save the changes to the name textField
     handleChange = event => {
         this.setState({
             name: event.target.value
         })
     }
 
+    // Create the album from the value of the textField, saving it to local storage
     handleSubmit = name => {
         this.props.createAlbum(-1, name, []);
         this.setState({name: ""});
@@ -63,10 +67,12 @@ class CreateAlbumForm extends React.Component {
         this.closeForm();
     }
 
+    // Open the dialog to create the album
     openForm = () => {
         this.setState({open: true});
     }
 
+    // Close the dialog to create the album
     closeForm = () => {
         this.setState({open: false});
     }

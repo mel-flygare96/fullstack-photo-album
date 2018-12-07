@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Drawer, List, ListItem, ListItemText, withStyles } from '@material-ui/core';
 
+// CSS in JS styles for this component
 const styles = theme => ({
     list: {
         width: 250,
@@ -13,12 +14,14 @@ const styles = theme => ({
     }
 });
 
+// Presentational component for the nav menu drawer on the app bar
 const NavMenu = ({
     classes,
     navOpen,
     toggleDrawer
 }) => {
 
+    // List of navigation items for the nav menu
     const navItems = (
         <div className={classes.list}>
             <List component="nav">
